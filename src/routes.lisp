@@ -8,7 +8,8 @@
   (hunchentoot:create-prefix-dispatcher "/stylesheets/"  'handlers::assets)
   (hunchentoot:create-prefix-dispatcher "/img/"          'handlers::assets)
   ;; routes where we might need arguments passed by script-name
-  (server:create-custom-dispatcher :get "/parenscripts/:file"  'handlers::parenscripts)
+  (server:create-custom-dispatcher :get "/parenscripts/:file"         'handlers::parenscripts)
+  (server:create-custom-dispatcher :get "/angular/:tutorial/:section" 'handlers::tutorials)
   ;; (server:create-custom-dispatcher :get "/contacts/:action/:id" 'handlers::contacts)
   ;; regex routes
   ;; (hunchentoot:create-regex-dispatcher "\\A/about\\z" 'handlers::about)

@@ -48,5 +48,54 @@
   (layout
    (with-html-output-to-string (*standard-output* nil :indent T)
      (:h1 "Home")
-     (:p "request " (fmt "~A" (script-name *request*)) )
+     (:p "request " (fmt "~A" (script-name *request*)))
+     (:h2 "Tutorials")
+     (:a :href "/angular/intro/all" "Intro") (:br)
+     (:a :href "/angular/expressions/1" "Expressions 1") (:br)
      )))
+
+(defun tutorials-layout (args view)
+  (setf (html-mode) :HTML5)
+  (with-html-output-to-string (*standard-output* nil :indent T :prologue T)
+    (:html (:head (:script :src "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"))
+           (:body
+            (fmt "~A" view)))))
+
+(defun tutorials (args)
+  (let ((tut     (cdr (assoc ":tutorial" args :test 'equal)))
+        (section (cdr (assoc ":section"  args :test 'equal))))
+     ;; (cerror "debugging session" "tried ~a" args)
+    (tutorials-layout
+     args
+     (cond
+       ((equal tut "intro")
+        (tutorial-intro))
+       ((and (equal tut "expressions") (equal section "1"))
+        (tutorial-expr1))
+       (T
+        "Error: section not implemented")))))
+
+(defun tutorial-intro ()
+  (with-html-output-to-string (*standard-output* nil :indent T)
+    ;; (cerror "debugging session" "tried ~a" args)
+    (:div :data-ng-app "myApp" :data-ng-controller "myCtrl"
+          "First Name:" (:input :type "text" :data-ng-model "firstName") (:br)
+          "Last Name:"  (:input :type "text" :data-ng-model "lastName")  (:br)
+          (:br)
+          (fmt "Full Name: {{ ~a }}" (ps (+ first-name " " last-name))))
+    (:script
+     (fmt "~%~A"
+          (ps
+            ;; last AngularJS Example from
+            ;; https://www.w3schools.com/angular/angular_intro.asp
+            (var app (chain angular (module "myApp" (array))))
+            (chain app (controller "myCtrl" (lambda ($scope)
+                                              (setf (@ $scope first-name) "John")
+                                              (setf (@ $scope last-name) "Doe")
+                                              (return undefined)))))))))
+
+
+(defun tutorial-expr1 ()
+  (with-html-output-to-string (*standard-output* nil :indent T)
+    (:div :ng-app ""
+          (:p (fmt "My first expression: {{ ~a }}" (ps (+ 5 5)))))))
