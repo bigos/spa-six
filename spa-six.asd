@@ -22,9 +22,19 @@
   :author "Jacek Podkanski"
   :mailto "ruby.object@googlemail.com"
   :license "LLGPL"
-  :depends-on (:cl-who :parenscript :hunchentoot :alexandria :iterate)
+  :depends-on (:cl-who
+               :parenscript
+               :hunchentoot
+               :alexandria
+               :iterate)
   :components ((:module "src"
-                :components
-                ((:file "package"))))
+                        :components
+                        ((:module "lib"
+                                  :components
+                                  ((:file "server")))
+                         (:file "package")
+                         (:file "handlers")
+                         (:file "parenscripts")
+                         (:file "routes"))))
   :description "Angular tutorials from W3C schools"
   :in-order-to ((test-op (test-op :spa-six.test))))

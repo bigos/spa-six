@@ -5,7 +5,7 @@
 
 (in-package :cl-user)
 (defpackage spa-six
-  (:use :cl :cl-who :parenscript :hunchentoot :alexandria :iterate))
+  (:use :cl :cl-who :parenscript :hunchentoot))
 (in-package :spa-six)
 
 ;; blah blah blah.
