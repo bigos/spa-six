@@ -10,12 +10,21 @@
   (let ((asset (merge-pathnames
                 (subseq (script-name *request*) 1)
                 (parse-namestring server::*file-root*))))
-    ;;(cerror "debugging session" "tried ~a" asset)
+    ;; (cerror "debugging session" "tried ~a" asset)
     (hunchentoot:handle-static-file asset)))
 
 (defun parenscripts (args)
   (setf (hunchentoot:content-type*) "text/javascript")
   (parenscripts-js))
+
+;;; example handler for custom dispatcher
+;; (defun contacts  (args)
+;;   ;; this is the way of invoking a debugger
+;;   ;; (cerror "debugging session" "tried ~a" args)
+;;   (format nil "Baz ~a ~a <br>get parameters ~a"
+;;           (request-method *request*)
+;;           args
+;;           (get-parameters *request*)))
 
 (defun layout (view)
   (with-html-output-to-string (*standard-output* nil :indent T)
