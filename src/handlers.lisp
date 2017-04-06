@@ -5,6 +5,9 @@
 
 (in-package :handlers)
 
+;;; make parenscript work nicely with cl-who
+(setf *js-string-delimiter* #\")
+
 ;;; Define handlers
 (defun assets ()
   (let ((asset (merge-pathnames
@@ -52,6 +55,7 @@
      (:h2 "Tutorials")
      (:a :href "/angular/intro/all" "Intro") (:br)
      (:a :href "/angular/expressions/1" "Expressions 1") (:br)
+     (:a :href "/angular/expressions/3" "Expressions 3") (:br)
      )))
 
 ;;; tutorial examples ----------------------------------------------------------
@@ -88,3 +92,9 @@
    (with-html-output-to-string (*standard-output* nil :indent T)
      (:div :ng-app ""
            (:p (fmt "My first expression: {{ ~a }}" (ps (+ 5 5))))))))
+
+(defun tut-expr3 ()
+  (tutorials-layout
+   (with-html-output-to-string (*standard-output* nil :indent T)
+     (:div :ng-app "" :ng-init (ps (setf my-col "lightblue"))
+           (:input :style "background-color:{{myCol}}" :ng-model "myCol" :value "{{myCol}}")))))
