@@ -1,10 +1,12 @@
 * Spa-Six  - Angular tutorials from W3C schools
 
 ** Installation
-clone the repo
+Clone the repo.
 
+#+BEGIN_EXAMPLE
 (push #p"~/Programming/Lisp/spa-six/" asdf:*central-registry*)
 (ql:quickload :spa-six)
+#+END_EXAMPLE
 
 visit localhost:5000/
 
