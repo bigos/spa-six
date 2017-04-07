@@ -117,6 +117,33 @@
      (:div :ng-app "" :ng-init (ps (setf first-name "John" last-name "Doe"))
            (:p (fmt "The name is ") (:span :ng-bind (ps (+ first-name " " last-name))) )))))
 
+
+(defun tut-expr8 ()
+  (tutorials-layout
+   (with-html-output-to-string (*standard-output* nil :indent T)
+     (:div :ng-app "" :ng-init (ps (setf person (create first-name "John" last-name "Doe")))
+           (:p (fmt "The name is {{ ~a }}" (ps (@ person last-name))))))))
+
+(defun tut-expr9 ()
+  (tutorials-layout
+   (with-html-output-to-string (*standard-output* nil :indent T)
+     (:div :ng-app "" :ng-init (ps (setf person (create first-name "John" last-name "Doe")))
+           (:p (fmt "The name is ") (:span :ng-bind  (ps (@ person last-name))))))))
+
+(defun tut-expr10 ()
+  (tutorials-layout
+   (with-html-output-to-string (*standard-output* nil :indent T)
+     (:div :ng-app "" :ng-init (ps (setf points (array 1 15 19 2 40)))
+           (:p (fmt "The third result is {{ ~a }} " (ps (aref points 2))))))))
+
+
+(defun tut-expr11 ()
+  (tutorials-layout
+   (with-html-output-to-string (*standard-output* nil :indent T)
+     (:div :ng-app "" :ng-init (ps (setf points (array 1 15 19 2 40)))
+           (:p (fmt "The third result is ") (:span :ng-bind (ps (aref points 2))))))))
+
+
 ;;; home page and tutorial handlers, tutorials are added above -----------------
 (defun tutorials (args)
   (let ((tut (cdr (assoc ":tutorial" args :test #'equal)))
@@ -136,6 +163,10 @@
                ((s= "5") (tut-expr5))
                ((s= "6") (tut-expr6))
                ((s= "7") (tut-expr7))
+               ((s= "8") (tut-expr8))
+               ((s= "9") (tut-expr9))
+               ((s= "10") (tut-expr10))
+               ((s= "11") (tut-expr11))
                (T (sec-error sec))))
         (T (format nil "Error: tutorial not implemented ~a" tut))))))
 
@@ -157,5 +188,10 @@
      ;; AngularJS Strings
      (:a :href "/angular/expressions/6" "Expressions 6") (:br)
      (:a :href "/angular/expressions/7" "Expressions 7") (:br)
-
+     ;; AngularJS Objects
+     (:a :href "/angular/expressions/8" "Expressions 8") (:br)
+     (:a :href "/angular/expressions/9" "Expressions 9") (:br)
+     ;; AngularJS Arrays
+     (:a :href "/angular/expressions/10" "Expressions 10") (:br)
+     (:a :href "/angular/expressions/11" "Expressions 11") (:br)
      )))
