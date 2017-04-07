@@ -29,6 +29,7 @@
 ;;           args
 ;;           (get-parameters *request*)))
 
+;;; layout for normal pages
 (defun layout (view)
   (with-html-output-to-string (*standard-output* nil :indent T)
     (:html
@@ -47,14 +48,15 @@
                  (fmt "time now ~2,'0d:~2,'0d current date ~2,'0d/~2,'0d/~d"
                       h m date month year) ))))))
 
-;;; tutorial examples ----------------------------------------------------------
-
+;;; layout for tutorials
 (defun tutorials-layout (view)
   (setf (html-mode) :HTML5)
   (with-html-output-to-string (*standard-output* nil :indent T :prologue T)
     (:html (:head (:script :src "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"))
            (:body
             (fmt "~A" view)))))
+
+;;; tutorial examples ----------------------------------------------------------
 
 (defun tut-intro ()
   (tutorials-layout
@@ -93,8 +95,29 @@
    (with-html-output-to-string (*standard-output* nil :indent T)
      (:div :ng-app "" :ng-init (ps (setf quantity 1
                                          cost 5))
-         (:p (fmt "Total in dollar: {{ ~a }}" (ps (* quantity cost))))))))
+           (:p (fmt "Total in dollar: {{ ~a }}" (ps (* quantity cost))))))))
 
+(defun tut-expr5 ()
+  (tutorials-layout
+   (with-html-output-to-string (*standard-output* nil :indent T)
+     (:div :ng-app "" :ng-init (ps (setf quantity 1
+                                         cost 5))
+           (:p (fmt "Total in dollar: ") (:span :ng-bind (ps (* quantity cost))))))))
+
+
+(defun tut-expr6 ()
+  (tutorials-layout
+   (with-html-output-to-string (*standard-output* nil :indent T)
+     (:div :ng-app "" :ng-init (ps (setf first-name "John" last-name "Doe"))
+           (:p (fmt "The name is {{ ~a }}" (ps (+ first-name " " last-name))))))))
+
+(defun tut-expr7 ()
+  (tutorials-layout
+   (with-html-output-to-string (*standard-output* nil :indent T)
+     (:div :ng-app "" :ng-init (ps (setf first-name "John" last-name "Doe"))
+           (:p (fmt "The name is ") (:span :ng-bind (ps (+ first-name " " last-name))) )))))
+
+;;; home page and tutorial handlers, tutorials are added above -----------------
 (defun tutorials (args)
   (let ((tut (cdr (assoc ":tutorial" args :test #'equal)))
         (sec (cdr (assoc ":section"  args :test #'equal))))
@@ -110,10 +133,12 @@
          (cond ((s= "1") (tut-expr1))   ;sections
                ((s= "3") (tut-expr3))
                ((s= "4") (tut-expr4))
+               ((s= "5") (tut-expr5))
+               ((s= "6") (tut-expr6))
+               ((s= "7") (tut-expr7))
                (T (sec-error sec))))
         (T (format nil "Error: tutorial not implemented ~a" tut))))))
 
-;;; home page handler, tutorials are added above -------------------------------
 (defun home ()
   (layout
    (with-html-output-to-string (*standard-output* nil :indent T)
@@ -126,5 +151,11 @@
      (:a :href "/angular/intro/all" "Intro") (:br)
      (:a :href "/angular/expressions/1" "Expressions 1") (:br)
      (:a :href "/angular/expressions/3" "Expressions 3") (:br)
+     ;; AngularJS Numbers
      (:a :href "/angular/expressions/4" "Expressions 4") (:br)
+     (:a :href "/angular/expressions/5" "Expressions 5") (:br)
+     ;; AngularJS Strings
+     (:a :href "/angular/expressions/6" "Expressions 6") (:br)
+     (:a :href "/angular/expressions/7" "Expressions 7") (:br)
+
      )))
