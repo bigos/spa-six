@@ -47,17 +47,6 @@
                  (fmt "time now ~2,'0d:~2,'0d current date ~2,'0d/~2,'0d/~d"
                       h m date month year) ))))))
 
-(defun home ()
-  (layout
-   (with-html-output-to-string (*standard-output* nil :indent T)
-     (:h1 "Home")
-     (:p "request " (fmt "~A" (script-name *request*)))
-     (:h2 "Tutorials")
-     (:a :href "/angular/intro/all" "Intro") (:br)
-     (:a :href "/angular/expressions/1" "Expressions 1") (:br)
-     (:a :href "/angular/expressions/3" "Expressions 3") (:br)
-     )))
-
 ;;; tutorial examples ----------------------------------------------------------
 
 (defun tutorials-layout (view)
@@ -98,3 +87,44 @@
    (with-html-output-to-string (*standard-output* nil :indent T)
      (:div :ng-app "" :ng-init (ps (setf my-col "lightblue"))
            (:input :style "background-color:{{myCol}}" :ng-model "myCol" :value "{{myCol}}")))))
+
+(defun tut-expr4 ()
+  (tutorials-layout
+   (with-html-output-to-string (*standard-output* nil :indent T)
+     (:div :ng-app "" :ng-init (ps (setf quantity 1
+                                         cost 5))
+         (:p (fmt "Total in dollar: {{ ~a }}" (ps (* quantity cost))))))))
+
+(defun tutorials (args)
+  (let ((tut (cdr (assoc ":tutorial" args :test #'equal)))
+        (sec (cdr (assoc ":section"  args :test #'equal))))
+    ;; (cerror "debugging uri params" "tried ~a" args)
+    (labels ((t= (tu) (equal tut tu))
+             (s= (s)  (equal sec s))
+             (sec-error (s) (format nil "Section not implemented ~a" s)))
+      (cond                             ;tutorials
+        ((t= "intro")
+         (cond ((s= "all") (tut-intro))  ;sections
+               (T (sec-error sec))))
+        ((t= "expressions")
+         (cond ((s= "1") (tut-expr1))   ;sections
+               ((s= "3") (tut-expr3))
+               ((s= "4") (tut-expr4))
+               (T (sec-error sec))))
+        (T (format nil "Error: tutorial not implemented ~a" tut))))))
+
+;;; home page handler, tutorials are added above -------------------------------
+(defun home ()
+  (layout
+   (with-html-output-to-string (*standard-output* nil :indent T)
+     (:h1 "Home")
+     (:p "request " (fmt "~A" (script-name *request*)))
+     (:h2 "Tutorials")
+     (:p "based on" (:a
+                     :href "https://www.w3schools.com/angular/default.asp"
+                     "AngularJS Tutorial"))
+     (:a :href "/angular/intro/all" "Intro") (:br)
+     (:a :href "/angular/expressions/1" "Expressions 1") (:br)
+     (:a :href "/angular/expressions/3" "Expressions 3") (:br)
+     (:a :href "/angular/expressions/4" "Expressions 4") (:br)
+     )))

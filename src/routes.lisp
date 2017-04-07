@@ -14,11 +14,15 @@
   ;; routes where we might need arguments passed by script-name
   (server:create-custom-dispatcher :get "/parenscripts/:file"         'handlers::parenscripts)
   ;; (server:create-custom-dispatcher :get "/contacts/:action/:id" 'handlers::contacts)
-  (exact-dispatcher "/angular/intro/all"     'handlers::tut-intro)
-  (exact-dispatcher "/angular/expressions/1" 'handlers::tut-expr1)
-  (exact-dispatcher "/angular/expressions/3" 'handlers::tut-expr3)
+
+  ;;; get the routes that exactly match the string
+  ;; (exact-dispatcher "/angular/intro/all"     'handlers::tut-intro)
+
+  (server:create-custom-dispatcher :get "/angular/:tutorial/:section" 'handlers::tutorials)
+
   ;; regex routes
   ;; (hunchentoot:create-regex-dispatcher "\\A/about\\z" 'handlers::about)
+
   ;; finally route to home page making sure the regex is terminated with \z
   (hunchentoot:create-regex-dispatcher "\\A/\\z" 'handlers::home)))
 

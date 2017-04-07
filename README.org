@@ -1,4 +1,7 @@
 * Spa-Six  - Angular tutorials from W3C schools
+Loosely based on https://www.w3schools.com/angular/default.asp
+This is experiment checking suitability of Parenscript
+https://common-lisp.net/project/parenscript/ for front end development.
 
 ** Installation
 Clone the repo.
@@ -8,7 +11,7 @@ Clone the repo.
 (ql:quickload :spa-six)
 #+END_EXAMPLE
 
-visit localhost:5000/
+visit http://localhost:5000/
 
 
 ** Author
