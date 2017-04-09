@@ -92,7 +92,9 @@
   (tutorials-layout
    (with-html-output-to-string (*standard-output* nil :indent T)
      (:div :ng-app "" :ng-init (ps (setf my-col "lightblue"))
-           (:input :style "background-color:{{myCol}}" :ng-model "myCol" :value "{{myCol}}")))))
+           (:input :style (format nil "background-color:~a" (tash (ps my-col)))
+                   :ng-model (ps my-col)
+                   :value (tash (ps my-col)))))))
 
 (defun tut-expr4 ()
   (tutorials-layout
