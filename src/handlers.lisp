@@ -8,6 +8,10 @@
 ;;; make parenscript work nicely with cl-who
 (setf *js-string-delimiter* #\")
 
+(defun tash (body)
+  "Wraps BODY with moustache {{ }} brackets."
+  (format nil "{{ ~a }}" body))
+
 ;;; Define handlers
 (defun assets ()
   (let ((asset (merge-pathnames
@@ -66,7 +70,7 @@
            "First Name:" (:input :type "text" :data-ng-model "firstName") (:br)
            "Last Name:"  (:input :type "text" :data-ng-model "lastName")  (:br)
            (:br)
-           (fmt "Full Name: {{ ~a }}" (ps (+ first-name " " last-name))))
+           (fmt "Full Name: ~a" (tash (ps (+ first-name " " last-name)))))
      (:script
       (fmt "~%~A"
            (ps
@@ -82,7 +86,7 @@
   (tutorials-layout
    (with-html-output-to-string (*standard-output* nil :indent T)
      (:div :ng-app ""
-           (:p (fmt "My first expression: {{ ~a }}" (ps (+ 5 5))))))))
+           (:p (fmt "My first expression: ~a" (tash (ps (+ 5 5)))))))))
 
 (defun tut-expr3 ()
   (tutorials-layout
@@ -95,7 +99,7 @@
    (with-html-output-to-string (*standard-output* nil :indent T)
      (:div :ng-app "" :ng-init (ps (setf quantity 1
                                          cost 5))
-           (:p (fmt "Total in dollar: {{ ~a }}" (ps (* quantity cost))))))))
+           (:p (fmt "Total in dollar: ~a" (tash (ps (* quantity cost)))))))))
 
 (defun tut-expr5 ()
   (tutorials-layout
@@ -109,7 +113,7 @@
   (tutorials-layout
    (with-html-output-to-string (*standard-output* nil :indent T)
      (:div :ng-app "" :ng-init (ps (setf first-name "John" last-name "Doe"))
-           (:p (fmt "The name is {{ ~a }}" (ps (+ first-name " " last-name))))))))
+           (:p (fmt "The name is ~a" (tash (ps (+ first-name " " last-name)))))))))
 
 (defun tut-expr7 ()
   (tutorials-layout
@@ -122,7 +126,7 @@
   (tutorials-layout
    (with-html-output-to-string (*standard-output* nil :indent T)
      (:div :ng-app "" :ng-init (ps (setf person (create first-name "John" last-name "Doe")))
-           (:p (fmt "The name is {{ ~a }}" (ps (@ person last-name))))))))
+           (:p (fmt "The name is ~a" (tash (ps (@ person last-name)))))))))
 
 (defun tut-expr9 ()
   (tutorials-layout
@@ -134,7 +138,7 @@
   (tutorials-layout
    (with-html-output-to-string (*standard-output* nil :indent T)
      (:div :ng-app "" :ng-init (ps (setf points (array 1 15 19 2 40)))
-           (:p (fmt "The third result is {{ ~a }} " (ps (aref points 2))))))))
+           (:p (fmt "The third result is ~a" (tash (ps (aref points 2)))))))))
 
 
 (defun tut-expr11 ()
@@ -157,14 +161,14 @@
          (cond ((s= "all") (tut-intro))  ;sections
                (T (sec-error sec))))
         ((t= "expressions")
-         (cond ((s= "1") (tut-expr1))   ;sections
-               ((s= "3") (tut-expr3))
-               ((s= "4") (tut-expr4))
-               ((s= "5") (tut-expr5))
-               ((s= "6") (tut-expr6))
-               ((s= "7") (tut-expr7))
-               ((s= "8") (tut-expr8))
-               ((s= "9") (tut-expr9))
+         (cond ((s= "1")  (tut-expr1))   ;sections
+               ((s= "3")  (tut-expr3))
+               ((s= "4")  (tut-expr4))
+               ((s= "5")  (tut-expr5))
+               ((s= "6")  (tut-expr6))
+               ((s= "7")  (tut-expr7))
+               ((s= "8")  (tut-expr8))
+               ((s= "9")  (tut-expr9))
                ((s= "10") (tut-expr10))
                ((s= "11") (tut-expr11))
                (T (sec-error sec))))
