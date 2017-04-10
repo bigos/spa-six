@@ -99,6 +99,10 @@
          (cond ((s= "1") (tut-modules1)) ;sections
                ((s= "2") (tut-modules2))
                (T (sec-error sec))))
+        ((t= "directives")
+         (cond ((s= "1") (tut-directives1)) ;sections
+               ((s= "2") (tut-directives2))
+               (T (sec-error sec))))
         (T (format nil "Error: tutorial not implemented ~a" tut))))))
 
 (defun home ()
@@ -131,6 +135,7 @@
       ;; Adding a Controller
       (:a :href "/angular/modules/1" "Modules 1") (:br)
       ;; Adding a Directive
-      (:a :href "/angular/modules/2" "Modules 2") (:br)
-      )
-     )))
+      (:a :href "/angular/modules/2" "Modules 2") (:br))
+     (:p
+      (:a :href "/angular/directives/1" "Directives 1") (:br)
+      (:a :href "/angular/directives/2" "Directives 2") (:br)))))
