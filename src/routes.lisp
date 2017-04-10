@@ -14,10 +14,10 @@
 
   (server:create-custom-dispatcher :get "/angular/:tutorial/:section" 'handlers::tutorials)
 
-  ;; regex routes
+  ;; reg-ex routes, take note of \\A and \\z reg-ex terminators
   ;; (hunchentoot:create-regex-dispatcher "\\A/about\\z" 'handlers::about)
 
-  ;; equal routes when the script name is equal to the url
+  ;; equal dispatcher when the script name is equal to the URL
   (server:create-equal-dispatcher "/about" 'handlers::about)
 
   ;; finally route to home page

@@ -33,6 +33,10 @@
                                   :components
                                   ((:file "server")))
                          (:file "package")
+
+                         (:file "tut-intro")
+                         (:file "tut-expr")
+
                          (:file "handlers")
                          (:file "parenscripts")
                          (:file "routes"))))
