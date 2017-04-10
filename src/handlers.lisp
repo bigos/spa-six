@@ -33,6 +33,10 @@
 ;;           args
 ;;           (get-parameters *request*)))
 
+
+(defun about ()
+  "about page")
+
 ;;; layout for normal pages
 (defun layout (view)
   (with-html-output-to-string (*standard-output* nil :indent T)

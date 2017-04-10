@@ -2,6 +2,7 @@
   (:use :common-lisp :cl-ppcre :hunchentoot)
   (:export :restart-acceptor
            :create-custom-dispatcher
+           :create-equal-dispatcher
            :add-routes))
 
 (in-package :server)
@@ -97,6 +98,13 @@ regex parts."
                     (return-from acceptor-dispatch-request (funcall handler)))))))
         (dispatch-table vhost))
   (call-next-method))
+
+(defun create-equal-dispatcher (url handler)
+  "Creates a dispatcher that will check equality of the URL and dispatch to
+ the function denoted by HANDLER."
+  (lambda (request)
+    (and (equal url (script-name request))
+         handler)))
 
 (defun create-custom-dispatcher (http-verb regex-builder handler)
   "Creates a request dispatch function which will dispatch to the function

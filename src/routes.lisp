@@ -1,8 +1,5 @@
 (in-package :spa-six)
 
-(defun exact-dispatcher (url handler)
-  (hunchentoot:create-regex-dispatcher (format nil "\\A~a\\z" url) handler))
-
 ;;; list of functions for adding to the dispatch-table
 (server:add-routes
  (list
@@ -15,16 +12,16 @@
   (server:create-custom-dispatcher :get "/parenscripts/:file"         'handlers::parenscripts)
   ;; (server:create-custom-dispatcher :get "/contacts/:action/:id" 'handlers::contacts)
 
-  ;;; get the routes that exactly match the string
-  ;; (exact-dispatcher "/angular/intro/all"     'handlers::tut-intro)
-
   (server:create-custom-dispatcher :get "/angular/:tutorial/:section" 'handlers::tutorials)
 
   ;; regex routes
   ;; (hunchentoot:create-regex-dispatcher "\\A/about\\z" 'handlers::about)
 
-  ;; finally route to home page making sure the regex is terminated with \z
-  (hunchentoot:create-regex-dispatcher "\\A/\\z" 'handlers::home)))
+  ;; equal routes when the script name is equal to the url
+  (server:create-equal-dispatcher "/about" 'handlers::about)
+
+  ;; finally route to home page
+  (server:create-equal-dispatcher "/" 'handlers::home)))
 
 ;;; Start VHOST
 (server:restart-acceptor)
