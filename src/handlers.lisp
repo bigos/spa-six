@@ -5,6 +5,13 @@
 ;;; make parenscript work nicely with cl-who
 (setf *js-string-delimiter* #\")
 
+(defun nosc (sequence)
+  "Removes last semicolon from the SEQUENCE."
+  (let ((last-character (subseq sequence (1- (length sequence)))))
+    (if (equal last-character ";")
+        (subseq sequence 0 (1- (length sequence)))
+        sequence)))
+
 (defun tash (body)
   "Wraps BODY with moustache {{ }} brackets."
   (format nil "{{ ~a }}" body))
@@ -74,10 +81,10 @@
              (sec-error (s) (format nil "Section not implemented ~a" s)))
       (cond                             ;tutorials
         ((t= "intro")
-         (cond ((s= "all") (tut-intro))  ;sections
+         (cond ((s= "all") (tut-intro)) ;sections
                (T (sec-error sec))))
         ((t= "expressions")
-         (cond ((s= "1")  (tut-expr1))   ;sections
+         (cond ((s= "1")  (tut-expr1))  ;sections
                ((s= "3")  (tut-expr3))
                ((s= "4")  (tut-expr4))
                ((s= "5")  (tut-expr5))
@@ -87,6 +94,10 @@
                ((s= "9")  (tut-expr9))
                ((s= "10") (tut-expr10))
                ((s= "11") (tut-expr11))
+               (T (sec-error sec))))
+        ((t= "modules")
+         (cond ((s= "1") (tut-modules1)) ;sections
+               ((s= "2") (tut-modules2))
                (T (sec-error sec))))
         (T (format nil "Error: tutorial not implemented ~a" tut))))))
 
@@ -99,19 +110,27 @@
      (:p "based on" (:a
                      :href "https://www.w3schools.com/angular/default.asp"
                      "AngularJS Tutorial"))
-     (:a :href "/angular/intro/all" "Intro") (:br)
-     (:a :href "/angular/expressions/1" "Expressions 1") (:br)
-     (:a :href "/angular/expressions/3" "Expressions 3") (:br)
-     ;; AngularJS Numbers
-     (:a :href "/angular/expressions/4" "Expressions 4") (:br)
-     (:a :href "/angular/expressions/5" "Expressions 5") (:br)
-     ;; AngularJS Strings
-     (:a :href "/angular/expressions/6" "Expressions 6") (:br)
-     (:a :href "/angular/expressions/7" "Expressions 7") (:br)
-     ;; AngularJS Objects
-     (:a :href "/angular/expressions/8" "Expressions 8") (:br)
-     (:a :href "/angular/expressions/9" "Expressions 9") (:br)
-     ;; AngularJS Arrays
-     (:a :href "/angular/expressions/10" "Expressions 10") (:br)
-     (:a :href "/angular/expressions/11" "Expressions 11") (:br)
+     (:p
+      (:a :href "/angular/intro/all" "Intro") (:br))
+     (:p
+      (:a :href "/angular/expressions/1" "Expressions 1") (:br)
+      (:a :href "/angular/expressions/3" "Expressions 3") (:br)
+      ;; AngularJS Numbers
+      (:a :href "/angular/expressions/4" "Expressions 4") (:br)
+      (:a :href "/angular/expressions/5" "Expressions 5") (:br)
+      ;; AngularJS Strings
+      (:a :href "/angular/expressions/6" "Expressions 6") (:br)
+      (:a :href "/angular/expressions/7" "Expressions 7") (:br)
+      ;; AngularJS Objects
+      (:a :href "/angular/expressions/8" "Expressions 8") (:br)
+      (:a :href "/angular/expressions/9" "Expressions 9") (:br)
+      ;; AngularJS Arrays
+      (:a :href "/angular/expressions/10" "Expressions 10") (:br)
+      (:a :href "/angular/expressions/11" "Expressions 11") (:br))
+     (:p
+      ;; Adding a Controller
+      (:a :href "/angular/modules/1" "Modules 1") (:br)
+      ;; Adding a Directive
+      (:a :href "/angular/modules/2" "Modules 2") (:br)
+      )
      )))

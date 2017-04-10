@@ -36,6 +36,7 @@
 
                          (:file "tut-intro")
                          (:file "tut-expr")
+                         (:file "tut-modules")
 
                          (:file "handlers")
                          (:file "parenscripts")
