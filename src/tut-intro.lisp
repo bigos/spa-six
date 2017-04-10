@@ -8,7 +8,7 @@
            "First Name:" (:input :type "text" :data-ng-model "firstName") (:br)
            "Last Name:"  (:input :type "text" :data-ng-model "lastName")  (:br)
            (:br)
-           (fmt "Full Name: ~a" (tash (ps (+ first-name " " last-name)))))
+           (fmt "Full Name: ~a" (tash (ps-nosc (+ first-name " " last-name)))))
      (:script
       (fmt "~%~A"
            (ps

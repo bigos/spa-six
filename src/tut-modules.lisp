@@ -5,12 +5,12 @@
   (tutorials-layout
    (with-html-output-to-string (*standard-output* nil :indent T)
      (:div :ng-app (ps my-app) :ng-controller (ps my-ctrl)
-           (fmt "~a"  (tash (ps (+ first-name " " last-name)))))
+           (fmt "~a"  (tash (ps-nosc (+ first-name " " last-name)))))
      (:script
       (fmt "~a"
            (ps
-             (var app (chain angular (module (lisp (ps my-app)) (array))))
-             (chain app (controller (lisp (ps my-ctrl))
+             (var app (chain angular (module (lisp (ps-nosc my-app)) (array))))
+             (chain app (controller (lisp (ps-nosc my-ctrl))
                                 (lambda ($scope)
                                   (setf (@ $scope first-name) "John"
                                         (@ $scope last-name) "Doe")
@@ -20,11 +20,11 @@
 (defun tut-modules2 ()
   (tutorials-layout
    (with-html-output-to-string (*standard-output* nil :indent T)
-     (:div :ng-app (nosc (ps my-app)) :w3-test-directive "" )
+     (:div :ng-app (ps-nosc my-app) :w3-test-directive "" )
      (:script
       (fmt "~%~a"
            (ps
-             (var app (chain angular (module (lisp (nosc (ps my-app))) (array))))
-             (chain app (directive (lisp (nosc (ps w3-test-directive)))
+             (var app (chain angular (module (lisp (ps-nosc my-app)) (array))))
+             (chain app (directive (lisp (ps-nosc w3-test-directive))
                                    (lambda ()
                                      (create template "I was made in a directive constructor!"))))))))))

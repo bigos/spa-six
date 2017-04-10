@@ -12,6 +12,10 @@
         (subseq sequence 0 (1- (length sequence)))
         sequence)))
 
+(defmacro ps-nosc (body)
+  "Convert BODY to JavaScript and optionally remove last semicolon."
+  `(nosc ,`(ps ,body)))
+
 (defun tash (body)
   "Wraps BODY with moustache {{ }} brackets."
   (format nil "{{ ~a }}" body))
