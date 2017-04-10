@@ -9,6 +9,7 @@
            (:p "Name: " (:input :type "text" :ng-model (nosc (ps first-name))))
            (:p (fmt "You wrote: ~a" (tash (nosc (ps first-name)))))))))
 
+;; Data Binding - https://www.w3schools.com/angular/angular_directives.asp
 (defun tut-directives2 ()
   (tutorials-layout
    (with-html-output-to-string (*standard-output* nil :indent T)
