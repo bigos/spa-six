@@ -15,12 +15,14 @@
 
 (defun about ()
   (with-html-string T
-    (body (:style "color: red" :empty-attribute "" :some-attribute (ps (+ "ab" "cd")))
+    (body (:style "color: red" :empty-attribute "")
           (<:label () "unconflicted label") ;use "<:tag" for shadowed imports
           (<:var () "unconflicted var")
-            (p ()
-               "Some text here"
-               (ul ()
-                   (li () "Line 1")))
-            (script () (ps
-                         (alert (+ "Hello " 1)))))))
+          (p (:onclick (ps (alert (+ "bo" "oo"))))
+             "Some text here" "!!!"
+             (ul ()
+                 (li () "Line 1")))
+          (script ()
+                  (ps (alert (+ "Hello " 1))
+                      (+ 1 2 3)
+                      (chain console (log "zzz")))))))
