@@ -24,6 +24,7 @@
   :license "LLGPL"
   :depends-on (:cl-who
                :parenscript
+               :xhtmlambda
                :hunchentoot
                :alexandria
                :iterate)
@@ -41,6 +42,7 @@
 
                          (:file "handlers")
                          (:file "parenscripts")
-                         (:file "routes"))))
+                         (:file "routes")
+                         (:file "about-page"))))
   :description "Angular tutorials from W3C schools"
   :in-order-to ((test-op (test-op :spa-six.test))))

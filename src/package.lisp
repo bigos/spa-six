@@ -8,6 +8,10 @@
 (defpackage :handlers
   (:use :cl :hunchentoot :cl-who :parenscript))
 
+
+(defpackage :about-page
+  (:use :cl :hunchentoot :xhtmlambda))
+
 (defpackage spa-six
   (:use :cl :cl-who :parenscript :hunchentoot))
 
