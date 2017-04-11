@@ -9,9 +9,9 @@
   (:use :cl :hunchentoot :cl-who :parenscript))
 
 
-(defpackage :about-page
-  (:use :cl :hunchentoot :xhtmlambda)
-  (:export :about))
+(defpackage :new-tutorials
+  (:shadowing-import-from "XHTMLAMBDA"  "VAR" "LABEL")
+  (:use :cl :hunchentoot :xhtmlambda :parenscript))
 
 
 (defpackage spa-six

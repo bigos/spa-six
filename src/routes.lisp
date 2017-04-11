@@ -18,7 +18,7 @@
   ;; (hunchentoot:create-regex-dispatcher "\\A/about\\z" 'handlers::about)
 
   ;; equal dispatcher when the script name is equal to the URL
-  (server:create-equal-dispatcher "/about" 'about-page:about)
+  (server:create-equal-dispatcher "/about" 'new-tutorials::about)
 
   ;; finally route to home page
   (server:create-equal-dispatcher "/" 'handlers::home)))
