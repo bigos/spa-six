@@ -10,7 +10,9 @@
 
 
 (defpackage :about-page
-  (:use :cl :hunchentoot :xhtmlambda))
+  (:use :cl :hunchentoot :xhtmlambda)
+  (:export :about))
+
 
 (defpackage spa-six
   (:use :cl :cl-who :parenscript :hunchentoot))
