@@ -3,7 +3,7 @@
 (in-package :handlers)
 
 ;;; make parenscript work nicely with cl-who
-(setf *js-string-delimiter* #\")
+;(setf *js-string-delimiter* #\")
 
 (defun nosc (sequence)
   "Removes last semicolon from the SEQUENCE."

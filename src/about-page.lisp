@@ -11,14 +11,16 @@
        (with-html-syntax-output (,result :syntax :standard :print-pretty T)
          ,body))))
 
+(setf *js-string-delimiter* #\')
+
 (defun about ()
   (with-html-string T
-    (body (:style "color: red" :empty-attribute "")
+    (body (:style "color: red" :empty-attribute "" :some-attribute (ps (+ "ab" "cd")))
           (<:label () "unconflicted label") ;use "<:tag" for shadowed imports
           (<:var () "unconflicted var")
             (p ()
                "Some text here"
                (ul ()
                    (li () "Line 1")))
-            (script () (parenscript:ps
+            (script () (ps
                          (alert (+ "Hello " 1)))))))
